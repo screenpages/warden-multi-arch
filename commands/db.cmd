@@ -43,6 +43,23 @@ case "${WARDEN_PARAMS[0]}" in
             "${WARDEN_DIR}/bin/warden" env exec -T db \
             mysqldump -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" "${WARDEN_PARAMS[@]:1}" "$@"
         ;;
+    tunnel)
+            DBTPORT=63306
+            DB_CONTAINER_HOST=$(docker inspect $DB_CONTAINER --format='{{.Name}}'| cut -c2- )
+            
+            INUSE=`lsof -i -P -n | grep $DBTPORT || true`
+            while [ ! -z "$INUSE" ]
+            do
+                DBTPORT=$((DBTPORT+1));
+                INUSE=`lsof -i -P -n | grep $DBTPORT || true`
+            done
+            echo -e "\033[33m$DB_CONTAINER_HOST: mysql://$MYSQL_USER:$MYSQL_PASSWORD@127.0.0.1:$DBTPORT/magento\033[0m"
+            echo "$WARDEN_HOME_DIR/dbtunnel_$DBTPORT.sock"
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -f -S $WARDEN_HOME_DIR/dbtunnel_$DBTPORT.sock -N -T -M  -L $DBTPORT:$DB_CONTAINER_HOST:3306 user@tunnel.warden.test -p2222 -i $WARDEN_HOME_DIR/tunnel/ssh_key > /dev/null 2>&1 
+            read -p "Press any key to close tunnel... " -n1 -s
+            printf "\nClosing DB Tunnel\n"
+            ssh -S $WARDEN_HOME_DIR/dbtunnel_$DBTPORT.sock -O exit tunnel.warden.test > /dev/null 2>&1
+        ;;
     *)
         fatal "The command \"${WARDEN_PARAMS[0]}\" does not exist. Please use --help for usage."
         ;;

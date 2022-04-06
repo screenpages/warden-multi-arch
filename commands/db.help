@@ -12,5 +12,6 @@ WARDEN_USAGE=$(cat <<EOF
   connect                  Launches an interactive mysql session within the current project environment
   import                   Reads data from stdin and loads it into the current project\047s mysql database
   dump                     Dumps database from db container via mysqldump
+  tunnel                   Open tunnel to db container. CMD-click the mysql link to open db connection in a supported GUI
 EOF
 )
