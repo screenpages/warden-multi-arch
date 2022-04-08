@@ -30,5 +30,7 @@ Warden version $(cat ${WARDEN_DIR}/version)
   debug             Launches debug enabled shell within current project environment
   sign-certificate  Signs a wildcard certificate including all passed hostnames on the SAN list
   version           Show version information
+  magento           Run bin/magento commands
+  bm                Run bin/magento commands (shorthand)
 EOF
 )

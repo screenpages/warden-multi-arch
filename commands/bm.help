@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+[[ ! ${WARDEN_DIR} ]] && >&2 echo -e "\033[31mThis script is not intended to be run directly!\033[0m" && exit 1
+
+WARDEN_USAGE=$(cat <<EOF
+\033[33mDescription:\033[0m
+  This will run the bin/magento command within warden
+
+\033[33mExamples:\033[0m
+  warden magento indexer:reindex                     - Reindex
+  warden magento cache:clean block_html full_page    - Clear fullpage and block cache
+  warden magento app:config:import                   - Import env.php changes
+
+\033[33mExamples short hand:\033[0m
+  warden bm indexer:reindex                     - Reindex
+  warden bm cache:clean block_html full_page    - Clear fullpage and block cache
+  warden bm app:config:import                   - Import env.php changes
+
+\033[33mShorthande:\033[0m
+  warden bm in:rei                             - Reindex
+  warden bm c:c block_html full_page    - Clear fullpage and block cache
+
+\033[33mOptions:\033[0m
+  -h, --help        Display this help menu
+EOF
+)
