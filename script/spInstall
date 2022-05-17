@@ -3,5 +3,5 @@
 sudo mv /opt/warden /opt/warden.bak && \
 sudo mkdir /opt/warden && \
 sudo chown $(whoami) /opt/warden && \
-git clone --branch debian git@github.com:screenpages/warden-multi-arch.git /opt/warden && \
+git clone --branch debian https://github.com/screenpages/warden-multi-arch.git /opt/warden && \
 warden install
