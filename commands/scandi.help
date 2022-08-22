@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+[[ ! ${WARDEN_DIR} ]] && >&2 echo -e "\033[31mThis script is not intended to be run directly!\033[0m" && exit 1
+
+WARDEN_USAGE=$(cat <<EOF
+\033[33mDescription:\033[0m
+  This will run the Scandi Development commands
+
+\033[33mExamples:\033[0m
+  warden scandi - This will run the scandi command
+  warden scandi help - This will show the scandi help
+  warden scandi i - This will run the scandi install command only
+  warden scandi r - this will remove the node modules for the scandi project only
+
+\033[33mOptions:\033[0m
+  -h, --help        Display this help menu
+EOF
+)
